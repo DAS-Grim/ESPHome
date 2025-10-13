@@ -7,29 +7,6 @@ esp32:
   framework:
     type: arduino
 
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-api:
-  encryption:
-    key: "1234567890abcdef"
-
-ota:
-  - platform: esphome
-    password: "1234567890abcdef"
-
-wifi:
-  ssid: "1234567890abcdef"
-  password: "1234567890abcdef"
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Digi-Reaper Fallback Hotspot"
-    password: "1234567890abcdef"
-
-captive_portal:
-
 output:
   - platform: ledc
     pin: 3

@@ -124,7 +124,7 @@ switch:
         - script.execute: Spray_Scheduler
     on_turn_off:
       then:
-        - logger.log: "Spray Scheduler Disabled Stoppng Script"
+        - logger.log: "Spray Scheduler Disabled Stopping Script"
         - script.stop: Spray_Scheduler
 
 binary_sensor:

@@ -14,12 +14,10 @@ logger:
 api:
   encryption:
 
-
-ota:  
+ota:
   - platform: esphome
 
 wifi:
-
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Digi-Reaper Fallback Hotspot"
@@ -50,9 +48,9 @@ light:
           max_brightness: 75%
     on_turn_on:
       then:
-      - light.control:
-          id: glow
-          effect: Pulse
+        - light.control:
+            id: glow
+            effect: Pulse
 
   - platform: monochromatic
     name: Lantern
@@ -66,6 +64,6 @@ light:
         intensity: 25%
     on_turn_on:
       then:
-      - light.control:
-          id: Lantern
-          effect: Flicker
+        - light.control:
+            id: Lantern
+            effect: Flicker

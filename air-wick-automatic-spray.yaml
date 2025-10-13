@@ -4,7 +4,7 @@ esphome:
   on_boot:
     - priority: -100
       then:
-      - script.execute: Spray_Scheduler
+        - script.execute: Spray_Scheduler
 
 esp32:
   board: esp32-c3-devkitm-1
@@ -17,26 +17,26 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: ${api_key}
+    key: "1234567890abcdef"
 
 ota:
   - platform: esphome
-    password: ${ota_password}
+    password: "1234567890abcdef"
 
 wifi:
-  ssid: ${wifi_ssid}
-  password: ${wifi_password}
-  use_address: ${wifi_static_ip}
+  ssid: "1234567890abcdef"
+  password: "1234567890abcdef"
+  use_address: "192.168.0.1"
   fast_connect: on
   power_save_mode: none
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Air-Wick-Automatic-Spray"
-    password: ${ap_password}
+    password: "1234567890abcdef"
 
 captive_portal:
-    
+
 globals:
   - id: Spray_Frequency_Var
     type: uint32_t
@@ -47,27 +47,27 @@ script:
       - globals.set:
           id: Spray_Frequency_Var
           value: !lambda |-
-                if (id(frequency).state == "1 Minute") {
-                  return 1 * 60 * 1000;
-                }                       
-                else if (id(frequency).state == "5 Minutes") {
-                  return 5 * 60 * 1000;
-                }
-                else if (id(frequency).state == "10 Minutes") {
-                  return 10 * 60 * 1000;  
-                }
-                else if (id(frequency).state == "15 Minutes") {
-                  return 15 * 60 * 1000;  
-                }
-                else if (id(frequency).state == "30 Minutes") {
-                  return 30 * 60 * 1000;  
-                }
-                else if (id(frequency).state == "60 Minutes") {
-                  return 60 * 60 * 1000;  
-                }
-                else {
-                  return 30 * 60 * 1000; 
-                }
+            if (id(frequency).state == "1 Minute") {
+              return 1 * 60 * 1000;
+            }                       
+            else if (id(frequency).state == "5 Minutes") {
+              return 5 * 60 * 1000;
+            }
+            else if (id(frequency).state == "10 Minutes") {
+              return 10 * 60 * 1000;  
+            }
+            else if (id(frequency).state == "15 Minutes") {
+              return 15 * 60 * 1000;  
+            }
+            else if (id(frequency).state == "30 Minutes") {
+              return 30 * 60 * 1000;  
+            }
+            else if (id(frequency).state == "60 Minutes") {
+              return 60 * 60 * 1000;  
+            }
+            else {
+              return 30 * 60 * 1000; 
+            }
 
   - id: Spray_Scheduler
     mode: restart
@@ -80,14 +80,14 @@ script:
       - if:
           condition:
             - switch.is_on: Spray_Scheduler_Enabled
-          then:  
+          then:
             - logger.log: "Spray Scheduler restarting"
             - script.execute: Spray_Scheduler
 
 time:
   - platform: homeassistant
     id: homeassistant_time
-    on_time: 
+    on_time:
       - seconds: 0
         minutes: 0
         hours: /1
@@ -95,7 +95,7 @@ time:
           - if:
               all:
                 - not:
-                   - script.is_running: Spray_Scheduler
+                    - script.is_running: Spray_Scheduler
                 - switch.is_on: Spray_Scheduler_Enabled
               then:
                 - logger.log: "Spray Scheduler enabled but not running, starting..."
@@ -104,14 +104,14 @@ time:
                 - if:
                     condition:
                       - not:
-                        - switch.is_on: Spray_Scheduler_Enabled
-                    then:  
-                      -  logger.log: "Spray Scheduler Not Enabled"
+                          - switch.is_on: Spray_Scheduler_Enabled
+                    then:
+                      - logger.log: "Spray Scheduler Not Enabled"
                 - if:
                     condition:
                       - script.is_running: Spray_Scheduler
-                    then:  
-                      -  logger.log: "Spray Scheduler Already Running"
+                    then:
+                      - logger.log: "Spray Scheduler Already Running"
 
 select:
   - platform: template
@@ -119,12 +119,12 @@ select:
     id: frequency
     icon: mdi:camera-timer
     options:
-     - "1 Minute"
-     - "5 Minutes"
-     - "10 Minutes"
-     - "15 Minutes"
-     - "30 Minutes"
-     - "60 Minutes"
+      - "1 Minute"
+      - "5 Minutes"
+      - "10 Minutes"
+      - "15 Minutes"
+      - "30 Minutes"
+      - "60 Minutes"
     restore_value: true
     optimistic: true
     on_value:
@@ -132,7 +132,7 @@ select:
         - if:
             condition:
               - switch.is_on: Spray_Scheduler_Enabled
-            then:  
+            then:
               - logger.log: "Frequency Updated Spray Scheduler Restarting"
               - script.execute: Spray_Scheduler
 
@@ -145,7 +145,7 @@ switch:
     on_turn_on:
       then:
         - logger.log: "Spray Scheduler Enabled Spraying"
-        - button.press: Spray_Button         
+        - button.press: Spray_Button
         - logger.log: "Spray Scheduler Enabled Starting Script"
         - script.execute: Spray_Scheduler
     on_turn_off:
@@ -178,7 +178,6 @@ output:
   - platform: gpio
     pin: 0
     id: "Spray"
-
 # sensor:
 #   - platform: template
 #     name: "Spray Frequency Var"

@@ -13,20 +13,20 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: ${api_key}
+    key: "1234567890abcdef"
 
 ota:
   - platform: esphome
-    password: ${ota_password}
+    password: "1234567890abcdef"
 
 wifi:
-  ssid: ${wifi_ssid}
-  password: ${wifi_password}
+  ssid: "1234567890abcdef"
+  password: "1234567890abcdef"
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Street-Fighter-2-Arcade"
-    password: ${ap_password}
+    password: "1234567890abcdef"
 
 captive_portal:
 
@@ -133,8 +133,6 @@ button:
       - output.turn_on: Jab
       - delay: 200ms
       - output.turn_off: Jab
-    
-
 
 output:
   - platform: gpio
@@ -142,7 +140,7 @@ output:
     id: "Jab"
 
   - platform: gpio
-    pin: 
+    pin:
       number: 2
       ignore_strapping_warning: True
     id: "Menu"

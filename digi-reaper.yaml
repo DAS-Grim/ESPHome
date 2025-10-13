@@ -14,20 +14,20 @@ logger:
 api:
   encryption:
     key: "[REDACTED]"
-"[REDACTED]""[REDACTED]""[REDACTED]"
+
 ota:
   - platform: esphome
     password: "[REDACTED]"
-"[REDACTED]""[REDACTED]""[REDACTED]"
+
 wifi:
   ssid: "[REDACTED]"
-"[REDACTED]""[REDACTED]""[REDACTED]"  password: 
-"[REDACTED]"
+  password: "[REDACTED]"
+
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "[REDACTED]"
     password: "[REDACTED]"
-"[REDACTED]""[REDACTED]""[REDACTED]"
+
 captive_portal:
 
 output:

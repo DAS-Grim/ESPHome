@@ -18,15 +18,15 @@ logger:
 api:
   encryption:
     key: "[REDACTED]"
-"[REDACTED]""[REDACTED]""[REDACTED]"
+
 ota:
   - platform: esphome
     password: "[REDACTED]"
-"[REDACTED]""[REDACTED]""[REDACTED]"
+
 wifi:
   ssid: "[REDACTED]"
-"[REDACTED]""[REDACTED]""[REDACTED]"  password: 
-"[REDACTED]"  use_address: 
+  password: "[REDACTED]"
+  use_address: ${wifi_static_ip}
   fast_connect: on
   power_save_mode: none
 
@@ -34,7 +34,7 @@ wifi:
   ap:
     ssid: "[REDACTED]"
     password: "[REDACTED]"
-"[REDACTED]""[REDACTED]""[REDACTED]"
+
 captive_portal:
     
 globals:

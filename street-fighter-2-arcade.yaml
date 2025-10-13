@@ -7,29 +7,6 @@ esp32:
   framework:
     type: arduino
 
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-api:
-  encryption:
-    key: "[REDACTED]"
-
-ota:
-  - platform: esphome
-    password: "[REDACTED]"
-
-wifi:
-  ssid: "[REDACTED]"
-  password: "[REDACTED]"
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "[REDACTED]"
-    password: "[REDACTED]"
-
-captive_portal:
-
 button:
   - platform: output
     name: "Jab"

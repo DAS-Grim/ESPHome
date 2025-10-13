@@ -7,23 +7,6 @@ esp32:
   framework:
     type: arduino
 
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-api:
-  encryption:
-
-ota:
-  - platform: esphome
-
-wifi:
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Data-East-Arcade"
-
-captive_portal:
-
 globals:
   - id: Day_Of_Week
     type: int

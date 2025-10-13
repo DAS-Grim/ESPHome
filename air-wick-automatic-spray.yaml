@@ -11,23 +11,6 @@ esp32:
   framework:
     type: arduino
 
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-api:
-  encryption:
-
-ota:
-  - platform: esphome
-
-wifi:
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Air-Wick-Automatic-Spray"
-
-captive_portal:
-
 globals:
   - id: Spray_Frequency_Var
     type: uint32_t

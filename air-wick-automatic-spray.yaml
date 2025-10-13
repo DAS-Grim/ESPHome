@@ -25,8 +25,8 @@ ota:
 "[REDACTED]""[REDACTED]""[REDACTED]"
 wifi:
   ssid: "[REDACTED]"
-  password: "[REDACTED]"
-  use_address: 
+"[REDACTED]""[REDACTED]""[REDACTED]"  password: 
+"[REDACTED]"  use_address: 
   fast_connect: on
   power_save_mode: none
 

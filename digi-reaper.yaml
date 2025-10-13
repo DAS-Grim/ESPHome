@@ -21,8 +21,8 @@ ota:
 "[REDACTED]""[REDACTED]""[REDACTED]"
 wifi:
   ssid: "[REDACTED]"
-  password: "[REDACTED]"
-
+"[REDACTED]""[REDACTED]""[REDACTED]"  password: 
+"[REDACTED]"
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "[REDACTED]"

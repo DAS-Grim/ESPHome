@@ -15,7 +15,8 @@ api:
   encryption:
 
 
-ota:  - platform: esphome
+ota:  
+  - platform: esphome
 
 wifi:
 

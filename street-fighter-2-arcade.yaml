@@ -1,0 +1,156 @@
+esphome:
+  name: street-fighter-2-arcade
+  friendly_name: Street Fighter 2 Arcade
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: 
+
+ota:
+  - platform: esphome
+    password: 
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Street-Fighter-2-Arcade"
+    password: 
+
+captive_portal:
+
+button:
+  - platform: output
+    name: "Jab"
+    icon: mdi:gamepad-circle
+    output: Jab
+    duration: 200ms
+
+  - platform: output
+    name: "Menu"
+    icon: mdi:gamepad-circle
+    output: Menu
+    duration: 200ms
+
+  - platform: output
+    name: "Down"
+    icon: mdi:gamepad-down
+    output: Down
+    duration: 200ms
+
+  - platform: output
+    name: "Right"
+    icon: mdi:gamepad-right
+    output: Right
+    duration: 200ms
+
+  - platform: template
+    name: "Start Cabinet"
+    icon: mdi:gamepad-square-outline
+    on_press:
+      - delay: 10s
+      - output.turn_on: Jab
+      - delay: 200ms
+      - output.turn_off: Jab
+      - delay: 50s
+      - output.turn_on: Menu
+      - delay: 200ms
+      - output.turn_off: Menu
+      - delay: 2s
+      - repeat:
+          count: 3
+          then:
+            - output.turn_on: Down
+            - delay: 200ms
+            - output.turn_off: Down
+            - delay: 200ms
+      - output.turn_on: Right
+      - delay: 200ms
+      - output.turn_off: Right
+      - delay: 200ms
+      - output.turn_on: Jab
+      - delay: 200ms
+      - output.turn_off: Jab
+
+  - platform: template
+    name: "Start Cabinet with No Intro"
+    icon: mdi:gamepad-square-outline
+    on_press:
+      - delay: 10s
+      - output.turn_on: Jab
+      - delay: 200ms
+      - output.turn_off: Jab
+      - delay: 10s
+      - output.turn_on: Menu
+      - delay: 200ms
+      - output.turn_off: Menu
+      - delay: 2s
+      - repeat:
+          count: 3
+          then:
+            - output.turn_on: Down
+            - delay: 200ms
+            - output.turn_off: Down
+            - delay: 200ms
+      - output.turn_on: Right
+      - delay: 200ms
+      - output.turn_off: Right
+      - delay: 200ms
+      - output.turn_on: Jab
+      - delay: 200ms
+      - output.turn_off: Jab
+
+  - platform: template
+    name: "Toggle Demo Sound"
+    icon: mdi:gamepad-square-outline
+    on_press:
+      - output.turn_on: Menu
+      - delay: 200ms
+      - output.turn_off: Menu
+      - delay: 1s
+      - repeat:
+          count: 3
+          then:
+            - output.turn_on: Down
+            - delay: 200ms
+            - output.turn_off: Down
+            - delay: 200ms
+      - output.turn_on: Right
+      - delay: 200ms
+      - output.turn_off: Right
+      - delay: 200ms
+      - output.turn_on: Jab
+      - delay: 200ms
+      - output.turn_off: Jab
+    
+
+
+output:
+  - platform: gpio
+    pin: 0
+    id: "Jab"
+
+  - platform: gpio
+    pin: 
+      number: 2
+      ignore_strapping_warning: True
+    id: "Menu"
+
+  - platform: gpio
+    pin: 10
+    id: "Down"
+
+  - platform: gpio
+    pin: 21
+    id: "Right"

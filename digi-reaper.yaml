@@ -1,0 +1,75 @@
+esphome:
+  name: digi-reaper
+  friendly_name: Digi-Reaper
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: 
+
+ota:
+  - platform: esphome
+    password: 
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Digi-Reaper Fallback Hotspot"
+    password: 
+
+captive_portal:
+
+output:
+  - platform: ledc
+    pin: 3
+    id: GlowLEDC
+
+  - platform: ledc
+    id: LanternLEDC
+    pin: 1
+
+light:
+  - platform: monochromatic
+    name: Glow
+    output: GlowLEDC
+    id: glow
+    icon: "mdi:ghost"
+    effects:
+      - pulse:
+          name: "Pulse"
+          transition_length: 5s
+          update_interval: 5s
+          min_brightness: 50%
+          max_brightness: 75%
+    on_turn_on:
+      then:
+      - light.control:
+          id: glow
+          effect: Pulse
+
+  - platform: monochromatic
+    name: Lantern
+    id: Lantern
+    icon: "mdi:coach-lamp-variant"
+    output: LanternLEDC
+    effects:
+      flicker:
+        name: Flicker
+        alpha: 50%
+        intensity: 25%
+    on_turn_on:
+      then:
+      - light.control:
+          id: Lantern
+          effect: Flicker

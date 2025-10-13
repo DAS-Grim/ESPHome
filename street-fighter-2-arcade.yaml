@@ -133,8 +133,6 @@ button:
       - output.turn_on: Jab
       - delay: 200ms
       - output.turn_off: Jab
-    
-
 
 output:
   - platform: gpio
@@ -142,7 +140,7 @@ output:
     id: "Jab"
 
   - platform: gpio
-    pin: 
+    pin:
       number: 2
       ignore_strapping_warning: True
     id: "Menu"

@@ -2,6 +2,11 @@ esphome:
   name: question-block-lamp
   friendly_name: Question Block Lamp
 
+globals:
+  - id: alert_running
+    type: bool
+    initial_value: false
+
 esp32:
   board: esp32-c3-devkitm-1
   framework:
@@ -56,10 +61,16 @@ button:
     name: "Question Block Lamp Alert"
     icon: mdi:bell-alert-outline
     on_press:
-      - repeat:
-          count: 5
+      - if:
+          condition:
+            lambda: 'return !id(alert_running);'
           then:
-            - switch.turn_on:  lamp_light
-            - delay: 2s
-            - switch.turn_off: lamp_light
-            - delay: 1s
+            - globals.set: alert_running: true
+            - repeat:
+                count: 5
+                then:
+                  - switch.turn_on: lamp_light
+                  - delay: 2s
+                  - switch.turn_off: lamp_light
+                  - delay: 1s
+            - globals.set: alert_running: false

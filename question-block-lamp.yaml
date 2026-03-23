@@ -16,33 +16,30 @@ binary_sensor:
   - platform: gpio
     pin:
       number: 1
-      mode:
-        input: true
-        pullup: true
-        #pulldown: true
+      mode: INPUT_PULLUP
       inverted: true
     id: light_state
-    internal: true       # Hides this raw sensor from Home Assistant
+    internal: true
+    filters:
+      - delayed_on: 50ms
+      - delayed_off: 50ms
 
 switch:
   - platform: gpio
-    pin: 3        # The pin connected to the relay
+    pin: 3 
     id: light_toggle
-    internal: true       # Hides the raw relay switch
+    internal: true
+    restore_mode: ALWAYS_OFF
 
   - platform: template
     name: "Question Block Lamp Light"
     id: lamp_light
-    optimistic: true
-    # This line ensures the switch starts in the OFF position after a reboot
-    restore_mode: ALWAYS_OFF
-    # This lambda tells the UI whether to show as ON or OFF
     lambda: |-
       return id(light_state).state;
     turn_on_action:
       - if:
           condition:
-            lambda: 'return !id(lamp_light).state;'
+            binary_sensor.is_off: light_state
           then:
             - switch.turn_on: light_toggle
             - delay: 200ms
@@ -50,7 +47,7 @@ switch:
     turn_off_action:
       - if:
           condition:
-            lambda: 'return id(lamp_light).state;'
+            binary_sensor.is_on: light_state
           then:
             - switch.turn_on: light_toggle
             - delay: 200ms
@@ -65,12 +62,12 @@ button:
           condition:
             lambda: 'return !id(alert_running);'
           then:
-            - globals.set: alert_running: true
+            - globals.set: { alert_running: true }
             - repeat:
                 count: 5
                 then:
                   - switch.turn_on: lamp_light
-                  - delay: 2s
+                  - delay: 1s
                   - switch.turn_off: lamp_light
                   - delay: 1s
-            - globals.set: alert_running: false
+            - globals.set: { alert_running: false }

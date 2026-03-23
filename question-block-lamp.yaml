@@ -1,0 +1,65 @@
+esphome:
+  name: question-block-lamp
+  friendly_name: Question Block Lamp
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 1
+      mode:
+        input: true
+        pullup: true
+        #pulldown: true
+      inverted: true
+    id: light_state
+    internal: true       # Hides this raw sensor from Home Assistant
+
+switch:
+  - platform: gpio
+    pin: 3        # The pin connected to the relay
+    id: light_toggle
+    internal: true       # Hides the raw relay switch
+
+  - platform: template
+    name: "Question Block Lamp Light"
+    id: lamp_light
+    optimistic: true
+    # This line ensures the switch starts in the OFF position after a reboot
+    restore_mode: ALWAYS_OFF
+    # This lambda tells the UI whether to show as ON or OFF
+    lambda: |-
+      return id(light_state).state;
+    turn_on_action:
+      - if:
+          condition:
+            lambda: 'return !id(lamp_light).state;'
+          then:
+            - switch.turn_on: light_toggle
+            - delay: 200ms
+            - switch.turn_off: light_toggle
+    turn_off_action:
+      - if:
+          condition:
+            lambda: 'return id(lamp_light).state;'
+          then:
+            - switch.turn_on: light_toggle
+            - delay: 200ms
+            - switch.turn_off: light_toggle
+
+button:
+  - platform: template
+    name: "Question Block Lamp Alert"
+    icon: mdi:bell-alert-outline
+    on_press:
+      - repeat:
+          count: 5
+          then:
+            - switch.turn_on:  lamp_light
+            - delay: 2s
+            - switch.turn_off: lamp_light
+            - delay: 1s

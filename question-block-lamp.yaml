@@ -5,7 +5,7 @@ esphome:
 globals:
   - id: alert_running
     type: bool
-    initial_value: false
+    initial_value: 'false'
 
 esp32:
   board: esp32-c3-devkitm-1
@@ -26,16 +26,19 @@ binary_sensor:
 
 switch:
   - platform: gpio
-    pin: 3 
+    pin: 3
     id: light_toggle
-    internal: true
+    internal: true 
     restore_mode: ALWAYS_OFF
 
   - platform: template
     name: "Question Block Lamp Light"
     id: lamp_light
+    optimistic: true
+    restore_mode: ALWAYS_OFF
     lambda: |-
       return id(light_state).state;
+    
     turn_on_action:
       - if:
           condition:
@@ -44,6 +47,7 @@ switch:
             - switch.turn_on: light_toggle
             - delay: 200ms
             - switch.turn_off: light_toggle
+            
     turn_off_action:
       - if:
           condition:
@@ -62,7 +66,9 @@ button:
           condition:
             lambda: 'return !id(alert_running);'
           then:
-            - globals.set: { alert_running: true }
+            - globals.set:
+                id: alert_running
+                value: 'true'
             - repeat:
                 count: 5
                 then:
@@ -70,4 +76,6 @@ button:
                   - delay: 1s
                   - switch.turn_off: lamp_light
                   - delay: 1s
-            - globals.set: { alert_running: false }
+            - globals.set:
+                id: alert_running
+                value: 'false'

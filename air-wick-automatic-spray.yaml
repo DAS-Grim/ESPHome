@@ -21,22 +21,22 @@ script:
       - globals.set:
           id: Spray_Frequency_Var
           value: !lambda |-
-            if (id(frequency).state == "1 Minute") {
+            if (id(frequency).value == "1 Minute") {
               return 1 * 60 * 1000;
             }                       
-            else if (id(frequency).state == "5 Minutes") {
+            else if (id(frequency).value == "5 Minutes") {
               return 5 * 60 * 1000;
             }
-            else if (id(frequency).state == "10 Minutes") {
+            else if (id(frequency).value == "10 Minutes") {
               return 10 * 60 * 1000;  
             }
-            else if (id(frequency).state == "15 Minutes") {
+            else if (id(frequency).value == "15 Minutes") {
               return 15 * 60 * 1000;  
             }
-            else if (id(frequency).state == "30 Minutes") {
+            else if (id(frequency).value == "30 Minutes") {
               return 30 * 60 * 1000;  
             }
-            else if (id(frequency).state == "60 Minutes") {
+            else if (id(frequency).value == "60 Minutes") {
               return 60 * 60 * 1000;  
             }
             else {

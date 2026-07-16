@@ -21,27 +21,13 @@ script:
       - globals.set:
           id: Spray_Frequency_Var
           value: !lambda |-
-            if (id(frequency).value == "1 Minute") {
-              return 1 * 60 * 1000;
-            }                       
-            else if (id(frequency).value == "5 Minutes") {
-              return 5 * 60 * 1000;
-            }
-            else if (id(frequency).value == "10 Minutes") {
-              return 10 * 60 * 1000;  
-            }
-            else if (id(frequency).value == "15 Minutes") {
-              return 15 * 60 * 1000;  
-            }
-            else if (id(frequency).value == "30 Minutes") {
-              return 30 * 60 * 1000;  
-            }
-            else if (id(frequency).value == "60 Minutes") {
-              return 60 * 60 * 1000;  
-            }
-            else {
-              return 30 * 60 * 1000; 
-            }
+            if (id(frequency).current_option() == "1 Minute")   return 1 * 60 * 1000;
+            if (id(frequency).current_option() == "5 Minutes")  return 5 * 60 * 1000;
+            if (id(frequency).current_option() == "10 Minutes") return 10 * 60 * 1000;  
+            if (id(frequency).current_option() == "15 Minutes") return 15 * 60 * 1000;  
+            if (id(frequency).current_option() == "30 Minutes") return 30 * 60 * 1000;  
+            if (id(frequency).current_option() == "60 Minutes") return 60 * 60 * 1000;  
+            return 30 * 60 * 1000; // Default fallback
 
   - id: Spray_Scheduler
     mode: restart

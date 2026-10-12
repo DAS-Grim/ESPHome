@@ -1,13 +1,15 @@
 {
     "cSpell.words": [
         "devkitm",
+        "digi",
         "esphome",
         "homeassistant",
+        "ledc",
         "pullup",
         "sprintf"
     ],
     "files.associations": {
-        "*.yaml": "esphome",
-        "*.yml": "esphome"
+        ".yaml": "esphome",
+        ".yml": "esphome"
     }
 }

@@ -1,0 +1,13 @@
+{
+    "cSpell.words": [
+        "devkitm",
+        "esphome",
+        "homeassistant",
+        "pullup",
+        "sprintf"
+    ],
+    "files.associations": {
+        "*.yaml": "esphome",
+        "*.yml": "esphome"
+    }
+}
